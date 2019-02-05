@@ -1,0 +1,2 @@
+# plain-manifestlist
+ManifestList image
