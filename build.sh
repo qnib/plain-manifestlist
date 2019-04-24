@@ -1,6 +1,17 @@
-:${REGISTRY=docker.io}
+#!/bin/bash
+
+: "${REGISTRY:=docker.io}"
 echo "image: ${REGISTRY}/qnib/plain-manifestlist" |tee manifest.yml
 echo "manifests:" |tee -a manifest.yml
+
+## Image without optimizations
+docker build -t ${REGISTRY}/qnib/plain-featuretest:generic .
+docker push ${REGISTRY}/qnib/plain-featuretest:generic
+echo "  -" |tee -a manifest.yml
+echo "    image: ${REGISTRY}/qnib/plain-featuretest:generic" |tee -a manifest.yml
+echo "    platform:" |tee -a manifest.yml
+echo "      architecture: amd64" |tee -a manifest.yml
+echo "      os: linux" |tee -a manifest.yml
 
 for x in cpu:skylake cpu:broadwell;do
   docker build -t ${REGISTRY}/qnib/plain-featuretest:$(echo ${x}|sed -e 's/:/-/') --build-arg=PLATFORM_FEATURES=${x} .
