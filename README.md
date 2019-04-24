@@ -9,29 +9,28 @@ Therefore `manifest-tool` must be used.
 This manifest description...
 
 ```
-image: qnib/plain-manifestlist
+image: docker.io/qnib/plain-manifestlist
 manifests:
   -
-    image: qnib/plain-featuretest:test1
+    image: docker.io/qnib/plain-featuretest:cpu-skylake
     platform:
       architecture: amd64
       os: linux
       features:
-        - test1
+        - cpu:skylake
   -
-    image: qnib/plain-featuretest:test2
+    image: docker.io/qnib/plain-featuretest:cpu-broadwell
     platform:
       architecture: amd64
       os: linux
       features:
-        - test2
+        - cpu:broadwell
   -
-    image: qnib/plain-featuretest:test34
+    image: docker.io/qnib/plain-featuretest:cpu_broadwell-nvcap_52
     platform:
       architecture: amd64
       os: linux
       features:
-        - test3
-        - test4
-
+        - cpu:broadwell
+        - nvcap:5.2
 ```

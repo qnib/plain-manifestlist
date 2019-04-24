@@ -2,7 +2,7 @@
 echo "image: ${REGISTRY}/qnib/plain-manifestlist" |tee manifest.yml
 echo "manifests:" |tee -a manifest.yml
 
-for x in test{1..3};do
+for x in cpu:skylake cpu:broadwell;do
   docker build -t ${REGISTRY}/qnib/plain-featuretest:$(echo ${x}|sed -e 's/:/-/') --build-arg=PLATFORM_FEATURES=${x} .
   docker push ${REGISTRY}/qnib/plain-featuretest:$(echo ${x}|sed -e 's/:/-/')
   echo "  -" |tee -a manifest.yml
@@ -14,17 +14,17 @@ for x in test{1..3};do
   echo "        - ${x}" |tee -a manifest.yml
 done
 
-## Image with two features [test1,test2]
-docker build -t ${REGISTRY}/qnib/plain-featuretest:test1-test2 --build-arg=PLATFORM_FEATURES=test1,test2 .
-docker push ${REGISTRY}/qnib/plain-featuretest:test1-test2
+## Image with two features [broadwell,nvcap52]
+docker build -t ${REGISTRY}/qnib/plain-featuretest:cpu_broadwell-nvcap_52 --build-arg=PLATFORM_FEATURES="cpu:broadwell,nvcap:5.2" .
+docker push ${REGISTRY}/qnib/plain-featuretest:cpu_broadwell-nvcap_52
 echo "  -" |tee -a manifest.yml
-echo "    image: ${REGISTRY}/qnib/plain-featuretest:test1-test2" |tee -a manifest.yml
+echo "    image: ${REGISTRY}/qnib/plain-featuretest:cpu_broadwell-nvcap_52" |tee -a manifest.yml
 echo "    platform:" |tee -a manifest.yml
 echo "      architecture: amd64" |tee -a manifest.yml
 echo "      os: linux" |tee -a manifest.yml
 echo "      features:" |tee -a manifest.yml
-echo "        - test1" |tee -a manifest.yml
-echo "        - test2" |tee -a manifest.yml
+echo "        - cpu:broadwell" |tee -a manifest.yml
+echo "        - nvcap:5.2" |tee -a manifest.yml
 
 if [[ ${REGISTRY} == "docker.io" ]];then
   if [[ "X${DOCKER_USER}" == "X" ]];then
