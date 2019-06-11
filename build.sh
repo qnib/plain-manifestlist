@@ -1,7 +1,7 @@
 #!/bin/bash
 
 : "${REGISTRY:=docker.io}"
-echo "image: ${REGISTRY}/qnib/plain-manifestlist" |tee manifest.yml
+echo "image: ${REGISTRY}/qnib/bench" |tee manifest.yml
 echo "manifests:" |tee -a manifest.yml
 
 ## Image without optimizations
