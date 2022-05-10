@@ -13,7 +13,7 @@ echo "    platform:" |tee -a manifest.yml
 echo "      architecture: amd64" |tee -a manifest.yml
 echo "      os: linux" |tee -a manifest.yml
 
-for x in cpu:skylake cpu:broadwell;do
+for x in cpu:skylake cpu:broadwell arch:skylake_avx512 arch:zen arch:zen2 arch:zen3 arch:cascadelake;do
   docker build -t ${REGISTRY}/qnib/plain-featuretest:$(echo ${x}|sed -e 's/:/-/') --build-arg=PLATFORM_FEATURES=${x} .
   docker push ${REGISTRY}/qnib/plain-featuretest:$(echo ${x}|sed -e 's/:/-/')
   echo "  -" |tee -a manifest.yml
